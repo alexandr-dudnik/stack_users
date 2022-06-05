@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/user_item_holder"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/spacing_tiny"
+    android:paddingVertical="@dimen/spacing_small">
+
+    <TextView
+        android:id="@+id/user_id_txt"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textAlignment="textEnd"
+        android:textSize="@dimen/list_item_text_size"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_percent="0.2"
+        tools:text="00001" />
+
+    <TextView
+        android:id="@+id/user_name_tv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_normal"
+        android:textAlignment="textStart"
+        android:textSize="@dimen/list_item_text_size"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/user_id_txt"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Test user" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

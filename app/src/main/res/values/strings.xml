@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Stack Exchange Demo</string>
+    <string name="search_button_caption">SEARCH</string>
+    <string name="search_query_hint">Type here to search user</string>
+    <string name="error_user_info_not_available">User data is not available</string>
+    <string name="user_name_title">User name</string>
+    <string name="user_reputation_title">Reputation</string>
+    <string name="user_badges_title">Badges</string>
+    <string name="user_location_title">Location</string>
+    <string name="user_age_title">Age</string>
+    <string name="user_created_date_title">Creation date</string>
+</resources>
