@@ -10,6 +10,13 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import com.alexanderdudnik.stackexchangedemo.R
 import com.alexanderdudnik.stackexchangedemo.databinding.ActivityMainBinding
 
+
+/**
+ * Main activity
+ *
+ * Contains initialisation of main activity class
+ */
+
 class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
@@ -24,12 +31,16 @@ class MainActivity : AppCompatActivity() {
 
         setSupportActionBar(binding.toolbar)
 
+        //setup navigation
         val navController = findNavController(R.id.nav_host_fragment)
         appBarConfiguration = AppBarConfiguration(navController.graph)
         setupActionBarWithNavController(navController, appBarConfiguration)
 
     }
 
+    /**
+     * Add support for navigate up
+     */
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment)
         return navController.navigateUp(appBarConfiguration)

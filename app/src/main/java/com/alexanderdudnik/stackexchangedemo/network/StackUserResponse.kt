@@ -3,6 +3,18 @@ package com.alexanderdudnik.stackexchangedemo.network
 import com.google.gson.annotations.SerializedName
 import java.util.*
 
+/**
+ * Stack user response from API
+ *
+ * @property accountId
+ * @property profileImage
+ * @property displayName
+ * @property age
+ * @property reputation
+ * @property badges
+ * @property location
+ * @property creationDate
+ */
 data class StackUserResponse(
     @SerializedName("account_id") val accountId: Int,
     @SerializedName("profile_image") val profileImage: String,

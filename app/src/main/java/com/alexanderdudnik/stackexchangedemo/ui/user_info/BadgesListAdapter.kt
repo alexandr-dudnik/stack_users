@@ -7,16 +7,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.alexanderdudnik.stackexchangedemo.R
 import com.alexanderdudnik.stackexchangedemo.databinding.BadgesListItemBinding
 
+/**
+ * Badges list adapter
+ *
+ * Describes static adapter for user badges using list as constructor parameter
+ */
 class BadgesListAdapter(private val data:List<String>) : RecyclerView.Adapter<BadgesListAdapter.ViewHolder>() {
-
-
-    class ViewHolder(view: View): RecyclerView.ViewHolder(view) {
-        private val binder = BadgesListItemBinding.bind(view)
-
-        fun bind(badge: String){
-            binder.badgeDescriptionTv.text = badge
-        }
-    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
@@ -32,5 +28,16 @@ class BadgesListAdapter(private val data:List<String>) : RecyclerView.Adapter<Ba
 
     override fun getItemCount(): Int = data.size
 
+
+    /**
+     * Internal class for View holder
+     */
+    class ViewHolder(view: View): RecyclerView.ViewHolder(view) {
+        private val binder = BadgesListItemBinding.bind(view)
+
+        fun bind(badge: String){
+            binder.badgeDescriptionTv.text = badge
+        }
+    }
 
 }

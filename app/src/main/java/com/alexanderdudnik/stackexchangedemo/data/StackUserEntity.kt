@@ -3,6 +3,18 @@ package com.alexanderdudnik.stackexchangedemo.data
 import com.alexanderdudnik.stackexchangedemo.network.StackUserResponse
 import java.util.*
 
+/**
+ * Stack user entity for local operations
+ *
+ * @property accountId
+ * @property profileImage
+ * @property displayName
+ * @property age
+ * @property reputation
+ * @property badges
+ * @property location
+ * @property creationDate
+ */
 data class StackUserEntity(
     val accountId: Int,
     val profileImage: String,
@@ -14,6 +26,9 @@ data class StackUserEntity(
     val creationDate: Date,
 )
 
+/**
+ * Extension function for converting api response to local entity
+ */
 fun StackUserResponse.toStackUserEntity(): StackUserEntity {
     return StackUserEntity(
         accountId = this.accountId,

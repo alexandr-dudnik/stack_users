@@ -15,6 +15,9 @@ import com.alexanderdudnik.stackexchangedemo.R
 import com.alexanderdudnik.stackexchangedemo.databinding.FragmentUserListBinding
 import com.alexanderdudnik.stackexchangedemo.ui.StackUsersViewModel
 
+/**
+ * Fragment for representing list of users
+ */
 class UserListFragment : Fragment(R.layout.fragment_user_list) {
     private val viewModel: StackUsersViewModel by activityViewModels()
 
@@ -41,6 +44,7 @@ class UserListFragment : Fragment(R.layout.fragment_user_list) {
             addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
             addOnScrollListener(object : RecyclerView.OnScrollListener() {
 
+                //Listen to scroll to last item and load next portion
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                     super.onScrolled(recyclerView, dx, dy)
                     (recyclerView.layoutManager as LinearLayoutManager).run {

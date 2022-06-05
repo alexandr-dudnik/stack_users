@@ -11,6 +11,9 @@ import io.reactivex.Observable
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 
+/**
+ * Stack users view model
+ */
 class StackUsersViewModel: ViewModel() {
     private val _userList = mutableListOf<StackUserEntity>()
     private val _usersLiveData = MutableLiveData<List<StackUserEntity>>()
@@ -28,6 +31,11 @@ class StackUsersViewModel: ViewModel() {
     private lateinit var apiDisposable: Disposable
 
 
+    /**
+     * Apply filter to the list
+     *
+     * @param newFilter
+     */
     fun setFilter(newFilter:String){
         if (filter != newFilter) {
             filter = newFilter
@@ -36,6 +44,11 @@ class StackUsersViewModel: ViewModel() {
         }
     }
 
+    /**
+     * Load bunch of users from api
+     *
+     * @param initial - defines if we need to load from first page
+     */
     fun loadUsers(initial:Boolean = false){
         if (initial){
             _userList.clear()
@@ -70,8 +83,16 @@ class StackUsersViewModel: ViewModel() {
             .subscribe()
     }
 
+    /**
+     * Get information about user by id
+     *
+     * @param id
+     */
     fun getUserData(id: Int): StackUserEntity?  = _userList.firstOrNull { it.accountId == id }
 
+    /**
+     * State describing loading states
+     */
     enum class LoadingState {
         IDLE,
         LOADING

@@ -10,6 +10,11 @@ import com.alexanderdudnik.stackexchangedemo.data.StackUserEntity
 import com.alexanderdudnik.stackexchangedemo.databinding.UserListItemBinding
 import com.alexanderdudnik.stackexchangedemo.ui.user_list.UserListAdapter.ViewHolder
 
+/**
+ * User list adapter
+ *
+ * @property selectItemCallback
+ */
 class UserListAdapter(
     private val selectItemCallback: (id: Int) -> Unit
 ) : RecyclerView.Adapter<ViewHolder>() {
@@ -28,6 +33,11 @@ class UserListAdapter(
 
     override fun getItemCount(): Int = data.size
 
+    /**
+     * Updates data for recycler view and animate changes
+     *
+     * @param newData
+     */
     fun updateList(newData: List<StackUserEntity>) {
         DiffUtil.calculateDiff(object : DiffUtil.Callback() {
             override fun getOldListSize(): Int = data.size
@@ -49,6 +59,11 @@ class UserListAdapter(
     }
 
 
+    /**
+     * View holder for items
+     *
+     * @param view
+     */
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val binder = UserListItemBinding.bind(view)
 

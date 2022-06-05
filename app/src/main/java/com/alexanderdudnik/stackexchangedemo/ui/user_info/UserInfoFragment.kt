@@ -19,6 +19,11 @@ import com.bumptech.glide.Glide
 import java.text.SimpleDateFormat
 import java.util.*
 
+/**
+ * User info fragment
+ *
+ * Screen with information about selected user
+ */
 class UserInfoFragment : Fragment(R.layout.fragment_user_info) {
     private var _binding: FragmentUserInfoBinding? = null
     private val binding get() = _binding!!
@@ -29,21 +34,17 @@ class UserInfoFragment : Fragment(R.layout.fragment_user_info) {
     private var user: StackUserEntity? = null
 
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        user = viewModel.getUserData( navArgs.accountId ) ?.also {
-            requireActivity().title = it.displayName
-        }
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onResume() {
         super.onResume()
+        user = viewModel.getUserData( navArgs.accountId )
+
         if (user == null){
             Toast.makeText(requireActivity(), getString(R.string.error_user_info_not_available), Toast.LENGTH_LONG).show()
             findNavController().navigateUp()
             return
+        } else {
+            requireActivity().title = user?.displayName
         }
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
