@@ -57,7 +57,7 @@ class StackUsersViewModel: ViewModel() {
         }
         if (endOfList) return
 
-        apiDisposable = App.getSelf().retrofit.getUserList(filter = filter?:"", page = lastPageLoaded+1, pageSize = 50)
+        apiDisposable = App.getSelf().retrofit.getUserList(filter = filter?:"", page = lastPageLoaded+1, pageSize = 20)
             .subscribeOn(Schedulers.io())
             .observeOn(Schedulers.newThread())
             .doOnSubscribe { _stateLiveData.postValue(LoadingState.LOADING) }

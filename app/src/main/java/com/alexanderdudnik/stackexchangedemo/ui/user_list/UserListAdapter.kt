@@ -50,7 +50,8 @@ class UserListAdapter(
 
             override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
                 return data[oldItemPosition].accountId == newData[newItemPosition].accountId &&
-                        data[oldItemPosition].displayName == newData[newItemPosition].displayName
+                        data[oldItemPosition].displayName == newData[newItemPosition].displayName &&
+                        data[oldItemPosition].reputation == newData[newItemPosition].reputation
             }
 
         }).dispatchUpdatesTo(this)
@@ -69,7 +70,7 @@ class UserListAdapter(
 
         fun bind(item: StackUserEntity, callback: (id: Int) -> Unit) {
             with(binder) {
-                userIdTxt.text = item.accountId.toString()
+                userReputationTxt.text = item.reputation.toString()
                 userNameTv.text = item.displayName
                 userItemHolder.setOnClickListener {
                     callback.invoke(item.accountId)
