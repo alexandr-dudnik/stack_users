@@ -1,4 +1,4 @@
-package com.alexanderdudnik.stackexchangedemo.ui
+package com.alexanderdudnik.stackexchangedemo.ui.user_list
 
 import android.util.Log
 import androidx.lifecycle.LiveData
@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import com.alexanderdudnik.stackexchangedemo.App
 import com.alexanderdudnik.stackexchangedemo.data.StackUserEntity
 import com.alexanderdudnik.stackexchangedemo.data.toStackUserEntity
+import com.alexanderdudnik.stackexchangedemo.ui.user_info.StackUsersInfoModel
 import io.reactivex.Observable
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
@@ -60,35 +61,33 @@ class StackUsersViewModel: ViewModel() {
         apiDisposable = App.getSelf().retrofit.getUserList(filter = filter?:"", page = lastPageLoaded+1, pageSize = 20)
             .subscribeOn(Schedulers.io())
             .observeOn(Schedulers.newThread())
-            .doOnSubscribe { _stateLiveData.postValue(LoadingState.LOADING) }
             .flatMap {
                 endOfList = !it.hasMore
                 Observable.fromIterable(it.userList)
             }
             .map { it.toStackUserEntity() }
-            .doOnNext {
-                _userList.add(it)
-            }
-            .doOnError {
-                Log.e("API_ERROR", "API Call error", it)
-            }
-            .doOnComplete {
-                lastPageLoaded++
-                _usersLiveData.postValue(_userList)
-            }
             .doFinally {
-                apiDisposable.dispose()
                 _stateLiveData.postValue(LoadingState.IDLE)
+                apiDisposable.dispose()
             }
-            .subscribe()
-    }
+            .subscribe(
+                {
+                    _userList.add(it)
+                },
+                {
+                    Log.e("API_ERROR", "API Call error", it)
+                    _stateLiveData.postValue(LoadingState.IDLE)
+                },
+                {
+                    lastPageLoaded++
+                    _usersLiveData.postValue(_userList)
+                },
+                {
+                    _stateLiveData.postValue(LoadingState.LOADING)
+                }
 
-    /**
-     * Get information about user by id
-     *
-     * @param id
-     */
-    fun getUserData(id: Int): StackUserEntity?  = _userList.firstOrNull { it.accountId == id }
+            )
+    }
 
     /**
      * State describing loading states

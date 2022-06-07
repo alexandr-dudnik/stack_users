@@ -11,6 +11,7 @@ import java.util.*
  * @property displayName
  * @property age
  * @property reputation
+ * @property userId
  * @property badges
  * @property location
  * @property creationDate
@@ -22,6 +23,7 @@ data class StackUserResponse(
     @SerializedName("age") val age: Int?,
     @SerializedName("reputation") val reputation: Int,
     @SerializedName("badge_counts") val badges: Map<String, Int>,
+    @SerializedName("user_id") val userId: Int,
     @SerializedName("location") val location: String?,
     @SerializedName("creation_date") val creationDate: Long,
 )

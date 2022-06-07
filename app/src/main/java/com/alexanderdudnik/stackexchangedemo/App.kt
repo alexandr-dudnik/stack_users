@@ -20,7 +20,7 @@ class App : Application() {
         self = this
 
         retrofit = Retrofit.Builder()
-            .baseUrl("https://api.stackexchange.com/")
+            .baseUrl("https://api.stackexchange.com/2.3/users/")
             .client(OkHttpClient())
             .addConverterFactory(GsonConverterFactory.create())
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())

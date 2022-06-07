@@ -16,7 +16,7 @@ import com.alexanderdudnik.stackexchangedemo.ui.user_list.UserListAdapter.ViewHo
  * @property selectItemCallback
  */
 class UserListAdapter(
-    private val selectItemCallback: (id: Int) -> Unit
+    private val selectItemCallback: (id: Int, name:String) -> Unit
 ) : RecyclerView.Adapter<ViewHolder>() {
     private val data = mutableListOf<StackUserEntity>()
 
@@ -68,12 +68,12 @@ class UserListAdapter(
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val binder = UserListItemBinding.bind(view)
 
-        fun bind(item: StackUserEntity, callback: (id: Int) -> Unit) {
+        fun bind(item: StackUserEntity, callback: (id: Int, name: String) -> Unit) {
             with(binder) {
                 userReputationTxt.text = item.reputation.toString()
                 userNameTv.text = item.displayName
                 userItemHolder.setOnClickListener {
-                    callback.invoke(item.accountId)
+                    callback.invoke(item.userId, item.displayName)
                 }
             }
         }

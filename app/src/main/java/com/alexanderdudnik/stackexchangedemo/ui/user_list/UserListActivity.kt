@@ -1,47 +1,52 @@
 package com.alexanderdudnik.stackexchangedemo.ui.user_list
 
+import android.content.Intent
 import android.os.Bundle
-import android.view.View
-import android.widget.Toast
+import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.WindowCompat
 import androidx.core.view.isVisible
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
-import androidx.navigation.NavDirections
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.alexanderdudnik.stackexchangedemo.R
-import com.alexanderdudnik.stackexchangedemo.databinding.FragmentUserListBinding
-import com.alexanderdudnik.stackexchangedemo.ui.StackUsersViewModel
+import com.alexanderdudnik.stackexchangedemo.databinding.ActivityUserListBinding
+import com.alexanderdudnik.stackexchangedemo.ui.user_info.UserInfoActivity
+
 
 /**
- * Fragment for representing list of users
+ * Main activity
+ *
+ * Contains initialisation of main activity class
  */
-class UserListFragment : Fragment(R.layout.fragment_user_list) {
-    private val viewModel: StackUsersViewModel by activityViewModels()
 
-    private var _binding: FragmentUserListBinding? = null
-    private val binding get() = _binding!!
+class UserListActivity : AppCompatActivity() {
 
-    private val listAdapter = UserListAdapter{ accountId ->
-        findNavController().navigate(UserListFragmentDirections.toUserInfoFragment(accountId))
+    private val viewModel: StackUsersViewModel by viewModels()
+    private lateinit var binding: ActivityUserListBinding
+    private val listAdapter = UserListAdapter{ userId, userName ->
+        val intent = Intent(this, UserInfoActivity::class.java).apply {
+            putExtra(UserInfoActivity.USER_ID_PARAM, userId)
+            putExtra(UserInfoActivity.USER_NAME_PARAM, userName)
+        }
+        startActivity(intent)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        WindowCompat.setDecorFitsSystemWindows(window, false)
         super.onCreate(savedInstanceState)
+
         viewModel.loadUsers(initial = true)
-    }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        _binding = FragmentUserListBinding.bind(view)
+        binding = ActivityUserListBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        requireActivity().title = getString(R.string.app_name)
+        binding.toolbar.title = getString(R.string.app_name)
+        setSupportActionBar(binding.toolbar)
 
         with (binding.userListRv) {
             adapter = listAdapter
-            addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
+            addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
             addOnScrollListener(object : RecyclerView.OnScrollListener() {
 
                 //Listen to scroll to last item and load next portion
@@ -60,7 +65,7 @@ class UserListFragment : Fragment(R.layout.fragment_user_list) {
             viewModel.setFilter(binding.searchQueryEt.text.toString())
         }
 
-        viewModel.stateLiveData.observe(viewLifecycleOwner){
+        viewModel.stateLiveData.observe(this){
             when (it){
                 StackUsersViewModel.LoadingState.LOADING -> {
                     binding.userListRv.isEnabled = false
@@ -75,13 +80,8 @@ class UserListFragment : Fragment(R.layout.fragment_user_list) {
                 }
             }
         }
-        viewModel.usersLiveData.observe(viewLifecycleOwner){
+        viewModel.usersLiveData.observe(this){
             listAdapter.updateList(it)
         }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 }

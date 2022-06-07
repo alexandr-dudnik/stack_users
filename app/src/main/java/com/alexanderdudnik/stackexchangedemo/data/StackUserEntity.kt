@@ -22,6 +22,7 @@ data class StackUserEntity(
     val age: Int?,
     val reputation: Int,
     val badges: Map<String, Int>,
+    val userId:Int,
     val location: String,
     val creationDate: Date,
 )
@@ -37,6 +38,7 @@ fun StackUserResponse.toStackUserEntity(): StackUserEntity {
         age = this.age,
         reputation = this.reputation,
         badges = this.badges,
+        userId = this.userId,
         location = this.location ?: "",
         creationDate = Date(this.creationDate * 1_000),
     )

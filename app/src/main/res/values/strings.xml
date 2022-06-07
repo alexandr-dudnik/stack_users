@@ -9,4 +9,6 @@
     <string name="user_location_title">Location</string>
     <string name="user_age_title">Age</string>
     <string name="user_created_date_title">Creation date</string>
+    <string name="loading">Loading…</string>
+    <string name="retry_button_title">Retry</string>
 </resources>
